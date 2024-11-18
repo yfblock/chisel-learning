@@ -19,6 +19,7 @@ class ALUTester extends AnyFreeSpec with Matchers {
             dut.io.alu_op.poke(ALU.ALU_SUB)
             println(s"ALU OP ${dut.io.out.peek()}")
 
+            
         }}
     }
 }

@@ -48,42 +48,17 @@ class ALU(bitWidth: Int) extends Module {
         ALU_SUB     -> (io.op1 - io.op2),
         ALU_AND     -> (io.op1 & io.op2),
         ALU_OR      -> (io.op1 | io.op2),
+        ALU_XOR     -> (io.op1 ^ io.op2),
+        ALU_SEQ     -> (io.op1 === io.op2),
+        ALU_SNE     -> (io.op1 =/= io.op2),
+        ALU_SLT     -> (io.op1.asSInt <  io.op2.asSInt),
+        ALU_SGE     -> (io.op1.asSInt >= io.alu_op.asSInt),
+        ALU_SLTU    -> (io.op1 <  io.op2),
+        ALU_SGEU    -> (io.op1 >= io.op2),
+        ALU_COPY1   -> io.op1,
+        ALU_COPY2   -> io.op2
     ))
 
     io.out := w_out
     io.cmp_out := false.B
-//
-//    // Shift
-//    val op2_inv: UInt = Mux(isSub(io.alu_op), ~io.op2, io.op2).asUInt
-//    val sum: UInt = io.op1 + op2_inv + isSub(io.alu_op)
-//    val shamt: UInt = io.op2(4,0).asUInt
-//    val shin: UInt = Mux(io.alu_op === ALU_SRA || io.alu_op === ALU_SRL,io.op1,Reverse(io.op1))
-//    val shift_r: UInt = (Cat(isSub(io.alu_op) & shin(31), shin).asSInt >> shamt)(31, 0)
-//    val shift_l: UInt = Reverse(shift_r)
-//    val slt: Bool = Mux(io.op1(31) === io.op2(31), sum(31), Mux(isCmpU(io.alu_op), io.op2(31), io.op1(31)))
-//
-//    val cmp: Bool = isCmpI(io.alu_op) ^ Mux(isCmpEq(io.alu_op), (io.op1 ^ io.op2) === 0.U, slt)
-//
-////    val w_out = MuxLookup(io.alu_op, io.op2, Seq(
-////        ALU_ADD     -> (io.op1 + io.op2),
-////        ALU_SLL     -> (io.op1 << shamt),
-////        ALU_SEQ     -> (io.op1 === io.op2),
-////        ALU_SNE     -> (io.op1 =/= io.op2),
-////        ALU_XOR     -> (io.op1 ^ io.op2),
-////        ALU_SRL     -> (io.op1 >> shamt),
-////        ALU_OR      -> (io.op1 | io.op2),
-////        ALU_AND     -> (io.op1 & io.op2),
-////        ALU_SUB     -> (io.op1 - io.op2),
-////        ALU_SRA     -> (io.op1.asSInt >> shamt).asUInt,
-////        ALU_SLT     -> (io.op1.asSInt < io.op2.asSInt),
-////        ALU_SGE     -> (io.op1.asSInt >= io.op2.asSInt),
-////        ALU_SLTU    ->  (io.op1 < io.op2),
-////        ALU_SGEU    ->  (io.op1 >= io.op2),
-////        ALU_COPY1   -> io.op1,
-////        ALU_COPY2   -> io.op2
-////    )).asUInt
-//
-//    val w_out = 3.U
-//    io.out := w_out
-//    io.cmp_out := cmp
 }
