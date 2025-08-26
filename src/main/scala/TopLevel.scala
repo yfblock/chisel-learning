@@ -1,5 +1,4 @@
 import circt.stage.ChiselStage
-import gcd.GCD
 import chisel3._
 import chisel3.util._
 import riscv64.ALU
@@ -11,7 +10,7 @@ class LEDBundle extends Bundle {
 class FlowLight extends Module {
     val io = IO(new LEDBundle())
     val leds = RegInit(1.U(8.W))
-    val alu = Module(new ALU(64))
+//    val alu = Module(new ALU(64))
 
     val (_, counterWrap) = Counter(true.B, 50_000_000)
     when(counterWrap) {

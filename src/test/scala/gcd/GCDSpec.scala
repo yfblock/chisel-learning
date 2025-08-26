@@ -4,9 +4,8 @@ package gcd
 
 import chisel3._
 import chisel3.experimental.BundleLiterals._
-import chisel3.simulator.EphemeralSimulator._
+import chiseltest._
 import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.must.Matchers
 
 /**
   * This is a trivial example of how to run this Specification
@@ -23,10 +22,10 @@ import org.scalatest.matchers.must.Matchers
   * mill chisel-learning.test.testOnly gcd.GCDSpec
   * }}}
   */
-class GCDSpec extends AnyFreeSpec with Matchers {
+class GCDSpec extends AnyFreeSpec with ChiselScalatestTester {
 
   "Gcd should calculate proper greatest common denominator" in {
-    simulate(new DecoupledGcd(16)) { dut =>
+    test(new DecoupledGcd(16)) { dut =>
       val testValues = for { x <- 0 to 10; y <- 0 to 10} yield (x, y)
       val inputSeq = testValues.map { case (x, y) => (new GcdInputBundle(16)).Lit(_.value1 -> x.U, _.value2 -> y.U) }
       val resultSeq = testValues.map { case (x, y) =>
@@ -53,7 +52,8 @@ class GCDSpec extends AnyFreeSpec with Matchers {
 
         if (received < 100) {
           dut.output.ready.poke(true.B)
-          if (dut.output.valid.peekValue().asBigInt == 1) {
+//          if (dut.output.valid.peekValue().asBigInt == 1) {
+          if (dut.output.valid.peekInt() == 1) {
             dut.output.bits.gcd.expect(BigInt(testValues(received)._1).gcd(testValues(received)._2))
             received += 1
           }

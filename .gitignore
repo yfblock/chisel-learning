@@ -344,3 +344,6 @@ hs_err_pid*
 .bloop
 
 fpga/src/*
+
+obj_dir
+project
