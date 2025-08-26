@@ -12,7 +12,7 @@ class RVCpu(memoryFile: String = "") extends Module {
 
 //    val memory = SyncReadMem(1024, UInt(32.W))
     val memory = Mem(1024, UInt(32.W))
-    loadMemoryFromFile(memory, memoryFile)
+    loadMemoryFromFileInline(memory, memoryFile)
 
     val pc = Module(new ProgramCounter());
 //    val regs = Module(new RegBank());
